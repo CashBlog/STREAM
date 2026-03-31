@@ -125,9 +125,12 @@ Not just a platform BUT a financial system.</p>
 <div class="card">  
 <p><strong>Registration Fee:</strong> ₦12,000</p>  
 <p><strong>Cashback:</strong> 100% immediately after registration</p>  
-<p><strong>Payment Method:</strong> Secure Online Payment</p>  
-<p>Complete your registration by using the secure payment link below.</p>  
-<a href="https://paystack.shop/pay/9vq4-7j-e9" class="btn" target="_blank">Pay Now with Paystack</a>  
+<p><strong>Bank Details:</strong></p>  
+<p>Bank Name: OPay</p>  
+<p>Account Name: CHIBUZOR MERCY</p>  
+<p>Account Number: 6109473130</p>  
+<p><em>Alternative (Optional):</em> <a href="https://paystack.shop/pay/9vq4-7j-e9" target="_blank" style="color:#2ED3C6; font-weight:bold;">Pay via Paystack</a></p>  
+<a class="btn" onclick="showSection('register')">Register Now</a>  
 </div>  
 </section>  <section id="register" style="display:none;">  
 <h2>Register on Stream Africa</h2>  
@@ -141,12 +144,19 @@ Not just a platform BUT a financial system.</p>
 </section>  <section id="payment" style="display:none;">  
 <h2>Complete Your Payment</h2>  
 <div class="payment-box">  
-<h3>Paystack Checkout</h3>  
+<h3>Bank Transfer (Primary)</h3>  
 <div class="account-details">  
-Click the link below to finalize your ₦12,000 activation fee via Paystack.<br><br>  
-<a href="https://paystack.shop/pay/9vq4-7j-e9" style="color:#2ED3C6; text-decoration:underline; font-weight:bold;" target="_blank">Secure Payment Link</a>  
+<strong>Bank Name:</strong> OPay<br>  
+<strong>Account Number:</strong> 6109473130<br>  
+<strong>Account Name:</strong> CHIBUZOR MERCY  
 </div>  
-<p>After completing your transaction, click below to submit your reference.</p>  
+<hr style="margin:20px 0; border:0; border-top:1px solid rgba(255,255,255,0.1);">  
+<h3>Paystack (Alternative)</h3>  
+<div class="account-details">  
+In case bank transfer is unavailable, you can use the secure link below:<br>  
+<a href="https://paystack.shop/pay/9vq4-7j-e9" style="color:#2ED3C6; text-decoration:underline; font-weight:bold;" target="_blank">Pay via Paystack Link</a>  
+</div>  
+<p>After completing payment, click below to submit proof.</p>  
 <button onclick="showSection('submit-proof')">I Have Made Payment</button>  
 </div>  
 </section>  <section id="submit-proof" style="display:none;">  
@@ -157,7 +167,8 @@ Click the link below to finalize your ₦12,000 activation fee via Paystack.<br>
 <input type="tel" placeholder="Phone Number" required>  
 <select required>  
 <option value="">Select Payment Method</option>  
-<option value="Paystack">Paystack</option>  
+<option>Bank Transfer</option>  
+<option>Paystack</option>  
 </select>  
 <input type="text" placeholder="Transaction ID / Reference Number" required id="trackingID">  
 <input type="file" required>  
@@ -185,6 +196,7 @@ function showSection(id){
 /* --- CONTINUOUS COUNTERS --- */  
 function animateValue(id,start,end,duration){  
   let range=end-start,current=start,increment=end>start?1:-1,stepTime=Math.abs(Math.floor(duration/range)),obj=document.getElementById(id);  
+  if(!obj) return;  
   let timer=setInterval(()=>{current+=increment;obj.innerHTML=current.toLocaleString();if(current===end)clearInterval(timer);},stepTime);  
 }  
 animateValue("users",5000,5428,2000);  
@@ -192,7 +204,12 @@ animateValue("collabs",18000,18934,2500);
 animateValue("cashback",3000,3207,2200);  
   
 let liveEarnings=50000;  
-function updateLiveEarnings(){liveEarnings+=Math.floor(Math.random()*300+100);document.getElementById("liveEarnings").innerText=`$${liveEarnings.toLocaleString()}`;}  
+function updateLiveEarnings(){  
+  let obj = document.getElementById("liveEarnings");  
+  if(!obj) return;  
+  liveEarnings+=Math.floor(Math.random()*300+100);  
+  obj.innerText=`$${liveEarnings.toLocaleString()}`;  
+}  
 setInterval(updateLiveEarnings,2000);  
   
 /* --- LIVE POPUPS ALL POSITIONS --- */  
@@ -222,6 +239,7 @@ function createLivePopup(){
   switch(pos){  
     case "users":case "collabs":case "cashback":  
       const elem=document.getElementById(pos);  
+      if(!elem) return;  
       const rect=elem.getBoundingClientRect();  
       popup.style.left=rect.left+window.scrollX+"px";  
       popup.style.top=rect.top+window.scrollY-40+"px";  
@@ -235,8 +253,8 @@ function createLivePopup(){
   const floatInterval=setInterval(()=>{  
     floatPos+=1;  
     if(pos.includes("side")) popup.style.top=parseInt(popup.style.top)-1+"px";  
-    else if(pos==="top") popup.style.top=parseInt(popup.style.top)-0.5+"px";  
-    else popup.style.top=parseInt(popup.style.top)-1+"px";  
+    else if(pos==="top") popup.style.top=parseFloat(popup.style.top)-0.5+"px";  
+    else popup.style.top=parseFloat(popup.style.top)-1+"px";  
     if(floatPos>=50) clearInterval(floatInterval);  
   },20);  
   setTimeout(()=>{popup.classList.remove("show");popup.classList.add("hide");setTimeout(()=>{popup.remove();},1000);},4000);  
@@ -245,18 +263,24 @@ setInterval(createLivePopup,Math.floor(Math.random()*4000)+2000);
   
 /* --- CONTINUOUS COUNTER INCREMENTS --- */  
 function incrementCounter(id,minInc=1,maxInc=5){  
-  const elem=document.getElementById(id);let current=parseInt(elem.innerText.replace(/,/g,''))||0;current+=Math.floor(Math.random()*(maxInc-minInc+1))+minInc;elem.innerText=current.toLocaleString();  
+  const elem=document.getElementById(id);  
+  if(!elem) return;  
+  let current=parseInt(elem.innerText.replace(/,/g,''))||0;  
+  current+=Math.floor(Math.random()*(maxInc-minInc+1))+minInc;  
+  elem.innerText=current.toLocaleString();  
 }  
 setInterval(()=>{incrementCounter("users");},2000);  
 setInterval(()=>{incrementCounter("collabs");},2500);  
 setInterval(()=>{incrementCounter("cashback");},2200);  
   
 /* --- SUBMIT PROOF WITH TRACKING ID AND TIMER --- */  
-let submitTime=20*60; // 20 minutes countdown  
+let submitTime=20*60;   
 function updateSubmitTimer(){  
+  const timerElem = document.getElementById("submitTimer");  
+  if(!timerElem) return;  
   const minutes=Math.floor(submitTime/60).toString().padStart(2,'0');  
   const seconds=(submitTime%60).toString().padStart(2,'0');  
-  document.getElementById("submitTimer").innerText=`${minutes}:${seconds}`;  
+  timerElem.innerText=`${minutes}:${seconds}`;  
   if(submitTime>0) submitTime--;  
 }  
 setInterval(updateSubmitTimer,1000);  
@@ -269,7 +293,6 @@ function submitProof(event){
   const method=document.querySelector("#submit-proof select").value;  
   const transID=document.getElementById("trackingID").value;  
   
-  // Pre-filled WhatsApp / Telegram messages  
   const message=`Hello, I have submitted my payment proof.\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nMethod: ${method}\nTransaction ID: ${transID}`;  
   document.getElementById("openWhatsApp").href=`https://wa.me/2347041807311?text=${encodeURIComponent(message)}`;  
   document.getElementById("openTelegram").href=`https://t.me/Official_landingpage_for_sites?text=${encodeURIComponent(message)}`;  
@@ -280,4 +303,5 @@ function submitProof(event){
   setTimeout(()=>{window.location.href="https://t.me/Official_landingpage_for_sites";},5000);  
 }  
 </script>  </body>  
-</html>
+  </html>
+  
